@@ -6,7 +6,7 @@
 const svg = d3.select("#chart-area").append("svg")
     .attr("width", 400)
     .attr("height", 400)
-    .attr("border", 1)
+    .attr("style", "outline: thin solid red;")
 
 svg.append("circle")
     .attr("cx",100)
