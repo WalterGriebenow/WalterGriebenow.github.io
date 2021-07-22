@@ -3,10 +3,9 @@
 *    Mastering Data Visualization with D3.js
 *    2.5 - Activity: Adding SVGs to the screen
 */
-<body onload = 'init()'>
 
 async function init() {
-    data = await d3.csv("https://raw.githubusercontent.com/alex6499cat/CS416-NarrativeVisualization/main/cars2017(1).csv");
+    const data = await d3.csv("https://raw.githubusercontent.com/alex6499cat/CS416-NarrativeVisualization/main/cars2017(1).csv");
     
     const svg = d3.select("#chart-area").append("svg")
     .attr("width", 400)
