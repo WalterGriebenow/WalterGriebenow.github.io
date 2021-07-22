@@ -4,19 +4,19 @@
 *    2.5 - Activity: Adding SVGs to the screen
 */
 
+const svg = d3.select("#chart-area").append("svg")
+.attr("width", 400)
+.attr("height", 400)
+.attr("style", "outline: thin solid black;");
+
+svg.append("circle")
+.attr("cx",100)
+.attr("cy",250)
+.attr("r",70)
+.attr("fill","blue");
+
 async function init() {
     const data = await d3.csv("https://raw.githubusercontent.com/alex6499cat/CS416-NarrativeVisualization/main/cars2017(1).csv");
-    
-    const svg = d3.select("#chart-area").append("svg")
-    .attr("width", 400)
-    .attr("height", 400)
-    .attr("style", "outline: thin solid black;")
-
-    svg.append("circle")
-    .attr("cx",100)
-    .attr("cy",250)
-    .attr("r",70)
-    .attr("fill","blue")
     
     var x = d3.scaleLog().base(10).domain([10,150]).range([0,200]);
     var y = d3.scaleLog().base(10).domain([10,150]).range([200,0]);
