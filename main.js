@@ -19,7 +19,7 @@ var year = 2011
 var ballot = 1
 
 async function init() {
-    const data = await d3.csvParse("Peru Elections "+ year +".csv", d3.autoType);
+    const data = await d3.csv("Peru Elections "+ year +".csv");
     
     var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9]).range([0,400]);
     var y = d3.scaleLinear().domain([0,70]).range([200,0]);
@@ -31,9 +31,9 @@ async function init() {
     .selectAll("dot")
     .data(data).enter().append("rect")
     .attr("x", function (d,i) {return x(i);}) 
-    .attr("y", function (d,i) {return y(+d.Percent1*1);})
+    .attr("y", function (d,i) {return y(Number(d.Percent1));})
     .attr("width", function(d,i) {return x.bandwidth()-2;})
-    .attr("height",function (d) {return 200 - y(+d.Percent1*1)})
+    .attr("height",function (d) {return 200 - y(Number(d.Percent1))})
     .attr("fill","blue");
 
     svg.append("g").attr("transform","translate(50,50)").call(axisy);
