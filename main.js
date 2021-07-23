@@ -5,31 +5,36 @@
 */
 
 const svg = d3.select("#chart-area").append("svg")
-.attr("width", 400)
-.attr("height", 400)
+.attr("width", 300)
+.attr("height", 300)
 .attr("style", "outline: thin solid black;");
 
 svg.append("circle")
 .attr("cx",100)
-.attr("cy",250)
-.attr("r",70)
+.attr("cy",150)
+.attr("r",40)
 .attr("fill","blue");
 
-async function init() {
-    const data = await d3.csv("https://raw.githubusercontent.com/alex6499cat/CS416-NarrativeVisualization/main/cars2017(1).csv");
-    
-    var x = d3.scaleLog().base(10).domain([10,150]).range([0,200]);
-    var y = d3.scaleLog().base(10).domain([10,150]).range([200,0]);
+var year = 2011
+var ballot = 1
 
-    var axisx = d3.axisBottom(x).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
-    var axisy = d3.axisLeft(y).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
+async function init() {
+    const data = await d3.csv("Peru Elections "+ year +".csv");
+    
+    var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9]).range([0,200]);
+    var y = d3.scaleLinear().domain([0,70]).range([200,0]);
+
+    var axisx = d3.axisBottom(x).tickValues([10,20,30,40,50,60]).tickFormat(d3.format("~s"));
+    var axisy = d3.axisLeft(y).tickFormat(d3.format("~s"));
 
     svg.append("g").attr("transform","translate(50,50)")
     .selectAll("dot")
-    .data(data).enter().append("circle")
-    .attr("cx", function (d,i) {return x(d.AverageCityMPG);}) 
-    .attr("cy", function (d,i) {return y(d.AverageHighwayMPG);})
-    .attr("r", function(d,i) {return d.EngineCylinders*1 +2;});
+    .data(data).enter().append("rect")
+    .attr("x", function (d,i) {return x(i);}) 
+    .attr("y", function (d,i) {return y(d.Votes1);})
+    .attr("width", function(d,i) {return x.bandwidth();})
+    .attr("height",function (d) {return 200 - y(d.Votes1)})
+    .attr("color","blue");
 
     svg.append("g").attr("transform","translate(50,50)").call(axisy);
     svg.append("g").attr("transform","translate(50,250)").call(axisx);
