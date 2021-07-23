@@ -32,9 +32,9 @@ async function init() {
     .selectAll("dot")
     .data(data).enter().append("rect")
     .attr("x", function (d,i) {return x(i);}) 
-    .attr("y", function (d,i) {return y(d.Votes1);})
-    .attr("width", function(d,i) {return x.bandwidth();})
-    .attr("height",function (d) {return 200 - y(d.Votes1)})
+    .attr("y", function (d,i) {return y(+d.Votes1);})
+    .attr("width", function(d,i) {return x.bandwidth()-1;})
+    .attr("height",function (d) {return 200 - y(+d.Votes1)})
     .attr("fill","blue");
 
     svg.append("g").attr("transform","translate(50,50)").call(axisy);
