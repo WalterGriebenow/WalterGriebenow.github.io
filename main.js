@@ -10,17 +10,11 @@ const svg = d3.select("#chart-area").append("svg")
 .attr("style", "outline: thin solid black;")
 .attr("transform","translate(50,100)");
 
-const svg2 = d3.select("#news-area").append("svg")
+const svg2 = d3.select("#news-area").append("svg2")
 .attr("width", 500)
 .attr("height", 300)
 .attr("style", "outline: thin solid black;")
 .attr("transform","translate(50,700)");
-
-svg.append("circle")
-.attr("cx",200)
-.attr("cy",150)
-.attr("r",40)
-.attr("fill","red");
 
 var colorList = ["red","pink","grey","LightBlue","blue"]
 
