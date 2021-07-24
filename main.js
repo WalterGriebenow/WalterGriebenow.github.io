@@ -10,7 +10,7 @@ const svg = d3.select("#chart-area").append("svg")
 .attr("style", "outline: thin solid black;")
 .attr("transform","translate(50,100)");
 
-const svg2 = d3.select("#news-area").append("svg2")
+const svg2 = d3.select("#news-area").append("svg")
 .attr("width", 500)
 .attr("height", 300)
 .attr("style", "outline: thin solid black;")
@@ -29,10 +29,10 @@ async function init() {
     } else {
         var x = d3.scaleBand().domain([0,1,2,3,4]).range([0,400]);
     }    
-    var y = d3.scaleLinear().domain([0,70]).range([200,0]);
+    var y = d3.scaleLinear().domain([0,60]).range([200,0]);
 
     var axisx = d3.axisBottom(x);
-    var axisy = d3.axisLeft(y).tickValues([10,20,30,40,50,60,70]);
+    var axisy = d3.axisLeft(y).tickValues([10,20,30,40,50,60]);
 
     svg.append("g").attr("transform","translate(50,50)")
     .selectAll("dot")
