@@ -10,6 +10,12 @@ const svg = d3.select("#chart-area").append("svg")
 .attr("style", "outline: thin solid black;")
 .attr("transform","translate(50,100)");
 
+const svg2 = d3.select("#news-area").append("svg")
+.attr("width", 500)
+.attr("height", 300)
+.attr("style", "outline: thin solid black;")
+.attr("transform","translate(50,700)");
+
 svg.append("circle")
 .attr("cx",200)
 .attr("cy",150)
@@ -18,8 +24,8 @@ svg.append("circle")
 
 var colorList = ["red","pink","grey","LightBlue","blue"]
 
-var year = 2011
-var ballot = 2
+var year = 2021
+var ballot = 1
 
 async function init() {
     const data = await d3.csv("Peru Elections "+ year +".csv");
