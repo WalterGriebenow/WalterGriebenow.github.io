@@ -14,7 +14,7 @@ const svg2 = d3.select("#news-area").append("svg")
 .attr("width", 500)
 .attr("height", 300)
 .attr("style", "outline: thin solid black;")
-.attr("transform","translate(50,700)");
+.attr("transform","translate(-500,100)");
 
 var colorList = ["red","pink","grey","LightBlue","blue"]
 
