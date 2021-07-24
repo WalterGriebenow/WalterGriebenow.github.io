@@ -16,6 +16,8 @@ svg.append("circle")
 .attr("r",40)
 .attr("fill","red");
 
+var colorList = ["red","pink","grey","LightBlue","blue"]
+
 var year = 2011
 var ballot = 2
 
@@ -39,7 +41,7 @@ async function init() {
     .attr("y", function (d,i) {return y(Number(ballot == 1 ? d.Percent1: d.Percent2));})
     .attr("width", function(d,i) {return x.bandwidth()-2;})
     .attr("height",function (d) {return 200 - y(Number(ballot == 1 ? d.Percent1: d.Percent2))})
-    .attr("fill","blue");
+    .attr("fill",function(d,i){return colorList[Number(d.OrientationN)-1]});
 
     svg.append("g").attr("transform","translate(50,50)").call(axisy);
     svg.append("g").attr("transform","translate(50,250)").call(axisx);
