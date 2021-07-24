@@ -7,7 +7,8 @@
 const svg = d3.select("#chart-area").append("svg")
 .attr("width", 500)
 .attr("height", 300)
-.attr("style", "outline: thin solid black;");
+.attr("style", "outline: thin solid black;")
+.attr("transform","translate(50,100)");
 
 svg.append("circle")
 .attr("cx",200)
@@ -21,7 +22,11 @@ var ballot = 2
 async function init() {
     const data = await d3.csv("Peru Elections "+ year +".csv");
     
-    var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9]).range([0,400]);
+    if (year == 2021) {
+        var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9]).range([0,400]);
+    } else {
+        var x = d3.scaleBand().domain([0,1,2,3,4]).range([0,400]);
+    }    
     var y = d3.scaleLinear().domain([0,70]).range([200,0]);
 
     var axisx = d3.axisBottom(x);
