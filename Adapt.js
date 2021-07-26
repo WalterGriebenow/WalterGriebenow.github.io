@@ -39,7 +39,7 @@ const timeLabel = g.append("text")
 	.attr("font-size", "20px")
 	.attr("opacity", "0.4")
 	.attr("text-anchor", "middle")
-	.text("2011 elections round 1")
+	.text("2011 round 1")
 
 let year = 2011
 let ballot = 1
@@ -57,6 +57,7 @@ d3.csv("Peru Elections.csv").then(function(data){
     })
 
     let yearData = data.filter(function(d) {return d.Year == String(year)})
+    console.log(yearData)
 
 	// run the code every 6 seconds
 	d3.interval(function(){
@@ -70,11 +71,13 @@ d3.csv("Peru Elections.csv").then(function(data){
             ballotField = "Percent2"
         }
         yearData = data.filter(function(d) {return d.Year == String(year)})
+        console.log(yearData)
 		update(yearData)
-	}, 6000)
+	}, 4000)
 
 	// first run of the visualization
 	update(yearData)
+    console.log(yearData)
 })
 
 function update(data) {
@@ -133,5 +136,5 @@ function update(data) {
             .attr("width", x.bandwidth)
 
 	// update the time label
-	timeLabel.text(String(year)+" elections round" + String(ballot))
+	timeLabel.text(String(year)+" round" + String(ballot))
 }
