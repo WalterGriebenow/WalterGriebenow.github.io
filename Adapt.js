@@ -53,7 +53,7 @@ d3.csv("Peru Elections.csv").then(function(data){
         d.Votes1 = Number(d.Votes1)
         d.Votes2 = Number(d.Votes2)
         d.Seats = Number(d.Seats)
-        d.OrientationN = Number(OrientationN)
+        d.OrientationN = Number(d.OrientationN)
     })
 
     let yearData = data.filter(function(d) {return d.Year == String(year)})
