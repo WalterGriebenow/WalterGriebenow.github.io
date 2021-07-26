@@ -84,9 +84,10 @@ function update(data) {
     // Scales
     const x = d3.scaleBand()
         .range([0, WIDTH])
-        .domain(data.map(d => d.party))
+        .domain(data.map(d => d.Party))
         .paddingInner(0.3)
         .paddingOuter(0.2)
+
     const y = d3.scaleLinear()
         .range([HEIGHT, 0])
         .domain([0, d3.max(data, d => d[ballotField])])
