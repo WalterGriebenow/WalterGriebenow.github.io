@@ -36,7 +36,7 @@ const yLabel = g.append("text")
 const timeLabel = g.append("text")
 	.attr("y", HEIGHT - 10)
 	.attr("x", WIDTH - 40)
-	.attr("font-size", "40px")
+	.attr("font-size", "20px")
 	.attr("opacity", "0.4")
 	.attr("text-anchor", "middle")
 	.text("2011 elections round 1")
@@ -124,7 +124,7 @@ function update(data) {
 
 	// ENTER new elements present in new data.
 	rectangles.enter().append("rect")
-		.attr("fill", d => partyColor(d.OrientationN - 1))
+		.attr("fill", d => partyColor[d.OrientationN - 1])
 		.merge(rectangles)
 		.transition(t)
 			.attr("y", d => y(d[ballotField]))
