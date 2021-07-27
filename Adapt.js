@@ -97,8 +97,7 @@ function update(data) {
     y.domain([0, 1.05 * d3.max(data, d => d[ballotField])])
         
 	// standard transition time for the visualization
-	const t = d3.transition()
-    .duration(500)
+	const t = d3.transition().duration(500)
 
     // X Axis
     const xAxisCall = d3.axisBottom(x)
@@ -117,14 +116,15 @@ function update(data) {
 
 	// JOIN new data with old elements.
 	const rectangles = g.selectAll("rect")
+		.data(data, d => d.Party)
+
+	// EXIT old elements not present in new data.
+	rectangles.exit()
         .attr("fill","red")
         .transition(t)
             .attr("height",0)
             .attr("y",y(0))
-		.data(data, d => d.Party)
-
-	// EXIT old elements not present in new data.
-	rectangles.exit().remove()
+            .remove()
 
 	// ENTER new elements present in new data.
 	rectangles.enter().append("rect")
