@@ -47,7 +47,6 @@ const x = d3.scaleBand()
 
 const y = d3.scaleLinear()
     .range([HEIGHT, 0])
-    .domain([0, d3.max(data, d => d[ballotField])])
 
 let year = 2011
 let ballot = 1
