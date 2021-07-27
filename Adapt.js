@@ -4,7 +4,7 @@
 *    Project 2 - Gapminder Clone
 */
 
-const MARGIN = { LEFT: 80, RIGHT: 80, TOP: 10, BOTTOM: 300 }
+const MARGIN = { LEFT: 90, RIGHT: 90, TOP: 10, BOTTOM: 300 }
 const WIDTH = 900 - MARGIN.LEFT - MARGIN.RIGHT
 const HEIGHT = 700 - MARGIN.TOP - MARGIN.BOTTOM
 
@@ -71,9 +71,8 @@ d3.csv("Peru Elections.csv").then(function(data){
     })
 
     let yearData = data.filter(function(d) {return d.Year == String(year)})
-    console.log(yearData)
 
-	// run the code every 6 seconds
+	// run the code every 4 seconds
 	d3.interval(function(){
 		// at the end of our data, loop back
         if (ballot == 2) {
@@ -85,19 +84,17 @@ d3.csv("Peru Elections.csv").then(function(data){
             ballotField = "Percent2"
         }
         yearData = data.filter(function(d) {return d.Year == String(year)})
-        console.log(yearData)
 		update(yearData)
 	}, 4000)
 
 	// first run of the visualization
 	update(yearData)
-    console.log(yearData)
 })
 
 function update(data) {
     // Scales varying part
     x.domain(data.map(d => d.Party))
-    y.domain([0, d3.max(data, d => d[ballotField])])
+    y.domain([0, 1.05 * d3.max(data, d => d[ballotField])])
         
 	// standard transition time for the visualization
 	const t = d3.transition()
@@ -106,7 +103,7 @@ function update(data) {
     // X Axis
     const xAxisCall = d3.axisBottom(x)
 
-    xAxisGroup.call(xAxisCall)
+    xAxisGroup.transition(t).call(xAxisCall)
         .selectAll("text")
         .attr("y","10")
         .attr("x","-5")
@@ -115,11 +112,15 @@ function update(data) {
 
     // Y Axis
     const yAxisCall = d3.axisLeft(y)
-    yAxisGroup.call(yAxisCall)
+    yAxisGroup.transition(t).call(yAxisCall)
 
 
 	// JOIN new data with old elements.
 	const rectangles = g.selectAll("rect")
+        .attr("fill","red")
+        .transition(t)
+            .attr("height",0)
+            .attr("y",y(0))
 		.data(data, d => d.Party)
 
 	// EXIT old elements not present in new data.
@@ -128,6 +129,8 @@ function update(data) {
 	// ENTER new elements present in new data.
 	rectangles.enter().append("rect")
 		.attr("fill", d => partyColor[d.OrientationN - 1])
+        .attr("y", y(0))
+        .attr("height",0)
 		.merge(rectangles)
 		.transition(t)
 			.attr("y", d => y(d[ballotField]))
