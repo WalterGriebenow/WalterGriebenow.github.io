@@ -4,7 +4,7 @@
 *    Project 2 - Gapminder Clone
 */
 
-const MARGIN = { LEFT: 100, RIGHT: 50, TOP: 10, BOTTOM: 300 }
+const MARGIN = { LEFT: 80, RIGHT: 80, TOP: 10, BOTTOM: 300 }
 const WIDTH = 900 - MARGIN.LEFT - MARGIN.RIGHT
 const HEIGHT = 700 - MARGIN.TOP - MARGIN.BOTTOM
 
@@ -19,7 +19,7 @@ const partyColor = ["blue","LightBlue","grey","pink","red"]
 
 // Labels
 const xLabel = g.append("text")
-	.attr("y", HEIGHT + 50)
+	.attr("y", HEIGHT + 80)
 	.attr("x", WIDTH / 2)
 	.attr("font-size", "20px")
 	.attr("text-anchor", "middle")
@@ -35,7 +35,7 @@ const timeLabel = g.append("text")
 	.attr("y", HEIGHT - 10)
 	.attr("x", WIDTH - 40)
 	.attr("font-size", "20px")
-	.attr("opacity", "0.4")
+	.attr("opacity", "0.6")
 	.attr("text-anchor", "middle")
 	.text("2011 round 1")
 
