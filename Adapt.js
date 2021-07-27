@@ -4,8 +4,8 @@
 *    Project 2 - Gapminder Clone
 */
 
-const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 300 }
-const WIDTH = 800 - MARGIN.LEFT - MARGIN.RIGHT
+const MARGIN = { LEFT: 100, RIGHT: 50, TOP: 10, BOTTOM: 300 }
+const WIDTH = 900 - MARGIN.LEFT - MARGIN.RIGHT
 const HEIGHT = 700 - MARGIN.TOP - MARGIN.BOTTOM
 
 const svg = d3.select("#chart-area").append("svg")
@@ -14,8 +14,6 @@ const svg = d3.select("#chart-area").append("svg")
 
 const g = svg.append("g")
   .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`)
-
-
 
 const partyColor = ["blue","LightBlue","grey","pink","red"]
 
@@ -41,9 +39,26 @@ const timeLabel = g.append("text")
 	.attr("text-anchor", "middle")
 	.text("2011 round 1")
 
+// Scales fixed part
+const x = d3.scaleBand()
+    .range([0, WIDTH])
+    .paddingInner(0.3)
+    .paddingOuter(0.2)
+
+const y = d3.scaleLinear()
+    .range([HEIGHT, 0])
+    .domain([0, d3.max(data, d => d[ballotField])])
+
 let year = 2011
 let ballot = 1
 let ballotField = "Percent1"
+
+const xAxisGroup = g.append("g")
+  .attr("class", "x axis")
+  .attr("transform", `translate(0, ${HEIGHT})`)
+
+const yAxisGroup = g.append("g")
+  .attr("class", "y axis")
 
 d3.csv("Peru Elections.csv").then(function(data){
 	// clean data
@@ -81,17 +96,9 @@ d3.csv("Peru Elections.csv").then(function(data){
 })
 
 function update(data) {
-    // Scales
-    const x = d3.scaleBand()
-        .range([0, WIDTH])
-        .domain(data.map(d => d.Party))
-        .paddingInner(0.3)
-        .paddingOuter(0.2)
-
-    const y = d3.scaleLinear()
-        .range([HEIGHT, 0])
-        .domain([0, d3.max(data, d => d[ballotField])])
-
+    // Scales varying part
+    x.domain(data.map(d => d.Party))
+    y.domain([0, d3.max(data, d => d[ballotField])])
         
 	// standard transition time for the visualization
 	const t = d3.transition()
@@ -100,11 +107,7 @@ function update(data) {
     // X Axis
     const xAxisCall = d3.axisBottom(x)
 
-    g.append("g")
-        .attr("class", "x axis")
-        .attr("transform", `translate(0, ${HEIGHT})`)
-        .transition(t)
-        .call(xAxisCall)
+    xAxisGroup.call(xAxisCall)
         .selectAll("text")
         .attr("y","10")
         .attr("x","-5")
@@ -113,10 +116,7 @@ function update(data) {
 
     // Y Axis
     const yAxisCall = d3.axisLeft(y)
-    g.append("g")
-        .attr("class", "y axis")
-        .transition(t)
-        .call(yAxisCall)
+    yAxisGroup.call(yAxisCall)
 
 
 	// JOIN new data with old elements.
