@@ -15,7 +15,8 @@ const svg = d3.select("#chart-area").append("svg")
 const g = svg.append("g")
   .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`)
 
-const partyColor = ["blue","LightBlue","grey","pink","red"]
+const partyColors = ["blue","LightBlue","grey","pink","red"]
+const partyTypes = ["Far left","Left","Center","Right","Far right"]
 
 // Labels
 const xLabel = g.append("text")
@@ -33,7 +34,7 @@ const yLabel = g.append("text")
 	.text("Votes (Percentage)")
 const timeLabel = g.append("text")
 	.attr("y", HEIGHT - 10)
-	.attr("x", WIDTH - 40)
+	.attr("x", WIDTH - 20)
 	.attr("font-size", "20px")
 	.attr("opacity", "0.6")
 	.attr("text-anchor", "middle")
@@ -43,7 +44,7 @@ const timeLabel = g.append("text")
 const x = d3.scaleBand()
     .range([0, WIDTH])
     .paddingInner(0.3)
-    .paddingOuter(0.2)
+    .paddingOuter(0.6)
 
 const y = d3.scaleLinear()
     .range([HEIGHT, 0])
@@ -58,6 +59,29 @@ const xAxisGroup = g.append("g")
 
 const yAxisGroup = g.append("g")
   .attr("class", "y axis")
+
+// Legend of type of political party 
+
+const legend = g.append("g")
+	.attr("transform", `translate(${WIDTH - 10}, ${HEIGHT - 125})`)
+
+partyTypes.forEach((pType, i) => {
+	const legendRow = legend.append("g")
+		.attr("transform", `translate(0, ${i * 20})`)
+
+	legendRow.append("rect")
+    .attr("width", 10)
+    .attr("height", 10)
+		.attr("fill", partyColors[i])
+
+	legendRow.append("text")
+    .attr("x", -10)
+    .attr("y", 10)
+    .attr("text-anchor", "end")
+    .style("text-transform", "capitalize")
+    .text(pType)
+})
+
 
 d3.csv("Peru Elections.csv").then(function(data){
 	// clean data
@@ -94,7 +118,7 @@ d3.csv("Peru Elections.csv").then(function(data){
 function update(data) {
     // Scales varying part
     x.domain(data.map(d => d.Party))
-    y.domain([0, 1.05 * d3.max(data, d => d[ballotField])])
+    y.domain([0, 1.3 * d3.max(data, d => d[ballotField])])
         
 	// standard transition time for the visualization
 	const t = d3.transition().duration(500)
@@ -113,7 +137,6 @@ function update(data) {
     const yAxisCall = d3.axisLeft(y)
     yAxisGroup.transition(t).call(yAxisCall)
 
-
 	// JOIN new data with old elements.
 	const rectangles = g.selectAll("rect")
 		.data(data, d => d.Party)
@@ -128,7 +151,7 @@ function update(data) {
 
 	// ENTER new elements present in new data.
 	rectangles.enter().append("rect")
-		.attr("fill", d => partyColor[d.OrientationN - 1])
+		.attr("fill", d => partyColors[d.OrientationN - 1])
         .attr("y", y(0))
         .attr("height",0)
 		.merge(rectangles)
@@ -139,5 +162,5 @@ function update(data) {
             .attr("width", x.bandwidth)
 
 	// update the time label
-	timeLabel.text(String(year)+" round" + String(ballot))
+	timeLabel.text(String(year)+" round " + String(ballot))
 }
