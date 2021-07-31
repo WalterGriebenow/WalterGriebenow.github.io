@@ -13,3 +13,8 @@
 	height: 60px;
 	padding: 5px 0px;
 }
+
+.tooltip {
+	display: inline;
+	position: fixed;
+  }
