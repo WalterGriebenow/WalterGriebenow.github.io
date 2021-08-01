@@ -101,7 +101,7 @@ const yAxisGroup = g.append("g")
 
 // Create a tooltip
 
-var Tooltip = d3.select("#chart-area")
+var Tooltip = d3.select(".row")
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
@@ -121,7 +121,7 @@ var mouseover = function(d) {
 }
 var mousemove = function(d) {
 Tooltip
-    .html("Name of Party: " + d.Party +"<br> Candidate: " + d.Candidate + "<br> Orientation: " + d.Orientation +"<br> Congress seats: "+ d.Seats + "<br> Votes 1st round (%): "+ d.Percent1+ "<br> Votes 1st round (n): "+ d.Votes1)
+    .html("Name of Party: " + d.Party +"<br> Candidate: " + d.Candidate + "<br> Orientation: " + d.Orientation +"<br> Congress seats: "+ d.Seats + "<br> Votes 1st round (%): "+ d.Percent1+ "<br> Votes 2nd round (%): "+ d.Percent2)
     .style("left", (d3.mouse(this)[0]+70) + "px")
     .style("top", (d3.mouse(this)[1]) + "px")
 }
@@ -139,16 +139,20 @@ d3.select(this)
 const electionComments = ["", "", "", "", "", ""]
 electionComments[0] = "Phoenix rebirth: Keiko Fujimori, the daughter of an autocratic past president now in prison, has rebuilt Popular Force party and promised honesty. She is helped by the economic growth that allegedly came from her father's free market reforms. Other contenders are Peru Wins a leftist party that is seen as a threat to the economic rebound, and a former prime minister leading a right coalition Alliance for Great Change that promises to accelerate the free market reforms."
 electionComments[1] = "Strategic play: Humala's Peru Wins gets the upper hand by moderating their leftist discourse towards the center and promising social reforms without dismantling the free market policies that proved to be effective. Some good reforms are implemented but corruption scandals stain his mandate. Poverty in urban areas recedes but his voting base in poor provinces and rural areas sees little to no progress and are disappointed."
-electionComments[2] = "Dellusion: Peru Wins introduced some social reforms that benefit urban areas but neglected his voting base in rural areas. The right wing parties benefit from the delusion from a leftist government that promised too much. Popular Force leverages the memory of the economic progress during her father's rule. This time she wins the congress in a landslide and will face former prime minister Kuczynski's Alliance for the Great Change in the 2nd round."
+electionComments[2] = "Dellusion: Peru Wins introduced some social reforms that benefit urban areas but neglected his voting base in rural areas. The right wing parties benefit from the dellusion from a leftist government that promised too much. Popular Force leverages the memory of the economic progress during her father's rule. This time she wins the congress in a landslide and will face former prime minister Kuczynski's Alliance for the Great Change in the 2nd round."
 electionComments[3] = "Emotion beats Reason: Alliance of Kuczynski capitalizes on the resentment towards the autocratic and corrupted government of Keiko's father and wins votes from the Left. They defeat Popular Force by mere 0.1% after a tough campaign. Kuczynski has little support in the congress and outside Lima the capital city. Popular Force uses the congress to block all his initiatives. He is forced to resign after a video shows him trying to bribe some Popular Force's congressmen to support his initiatives. From political instability to Chaos."
 electionComments[4] = "Save us from Saviours: The country is in political disarray. Some parties get dissolved and new leaders emerge. All claim to know how to better distribute the benefits of the economic boom among all peruvians and stop the corruption. 18 parties compete this year including far right and far left extremist parties. Socialists and Communists of Free Peru, lead by a rural teacher from a poor province, win the first round with only 19% of votes, followed by Popular Force with 13%."
 electionComments[5] = "Fascination for the Abyss: In a toxic campaign Popular Force accuses the socialists of Free Peru to be terrorists, and they accuse Popular Force to be corrupt. All newspapers and the media favor Popular Force. However, Free Peru manages to win by 0.1% difference. Popular Force claims fraud without proofs but with much media support, questioning the Electoral institute's neutrality. Next five years will test the limits of Peru's weak democracy."
+
+d3.select("#chart-area").append("hr")
 
 var comment = d3.select("#chart-area")
     .append("p")
     .attr("class", "message")
     .style("font-size", "14px")
     .text(electionComments[0]);
+
+d3.select("#chart-area").append("hr")
 
 // Read data from file 
 
