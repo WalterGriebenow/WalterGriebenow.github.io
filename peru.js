@@ -79,6 +79,10 @@ const roundLabel = g.append("text")
     .attr("text-anchor", "middle")
     .text("round 1")
 
+// initially Previous election looks disabled and Next looks normal
+d3.select("#prevButton").style("opacity", 0.3)
+d3.select("#nextButton").style("opacity", 1)
+
 // Scales fixed part - varying part below inside update function
 const x = d3.scaleBand()
     .range([0, WIDTH])
@@ -122,8 +126,9 @@ var mouseover = function(d) {
 var mousemove = function(d) {
 Tooltip
     .html("Name of Party: " + d.Party +"<br> Candidate: " + d.Candidate + "<br> Orientation: " + d.Orientation +"<br> Congress seats: "+ d.Seats + "<br> Votes 1st round (%): "+ d.Percent1+ "<br> Votes 2nd round (%): "+ d.Percent2)
-    .style("left", (d3.mouse(this)[0]+70) + "px")
+    .style("left", (d3.mouse(this)[0]+200) + "px")
     .style("top", (d3.mouse(this)[1]) + "px")
+    .style("opacity",1)
 }
 var mouseleave = function(d) {
 Tooltip
@@ -244,10 +249,16 @@ var next = function () {
         year = year + 5;
         ballot = 1;
         ballotField = "Percent1";
+        d3.select("#toggleButton").text("View 2nd round")
         yearData = data.filter(function (d) { return d.Year == String(year) });
         update(yearData);
         d3.selectAll("#annotation-id").html("")
         updateAnnotations();
+        if (year == 2021) {
+            d3.select("#nextButton").style("opacity", 0.3)
+        } else {
+            d3.select("#prevButton").style("opacity", 1)
+        }
     }
 }
 var previous = function () {
@@ -255,21 +266,27 @@ var previous = function () {
         year = year - 5
         ballot = 1
         ballotField = "Percent1";
+        d3.select("#toggleButton").text("View 2nd round")
         yearData = data.filter(function (d) { return d.Year == String(year) })
         update(yearData);
         d3.selectAll("#annotation-id").html("")
         updateAnnotations();
+        if (year == 2011) {
+            d3.select("#prevButton").style("opacity", 0.3)
+        } else {
+            d3.select("#nextButton").style("opacity", 1)
+        }
     }
 }
 var toggleBallot = function () {
     if (ballot == 1) {
         ballot = 2
         ballotField = "Percent2"
-        yearData = data.filter(function (d) { return d.Year == String(year) })
-        update(yearData)
+        d3.select("#toggleButton").text("View 1st round")
     } else {
         ballot = 1
         ballotField = "Percent1"
+        d3.select("#toggleButton").text("View 2nd round")
     }
     yearData = data.filter(function (d) { return d.Year == String(year) })
     update(yearData)
